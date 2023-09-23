@@ -4,7 +4,6 @@ import loginController from "../controllers/loginController"
 let router = express.Router();
 
 let initWebRoutes = (app) => {
-
     router.get("/", (req, res) => {
         res.json({ message: "Hello from server!" });
     });
