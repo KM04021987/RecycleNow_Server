@@ -18,6 +18,7 @@ let getPageLogin = async (req, res, next) => {
                         const token = jwt.sign({ account: user.ACCOUNT, usertype: user.USER_TYPE }, 'abcdefghijk');
                         const decode = jwt.verify(token, 'abcdefghijk');
                         const data = {
+                            user: user,
                             token: token,
                             usertype: user.USER_TYPE
                         }
