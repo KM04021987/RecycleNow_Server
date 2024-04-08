@@ -1,5 +1,6 @@
 import express from "express";
 import loginController from "../controllers/loginController"
+import profileController from "../controllers/profileController"
 
 let router = express.Router();
 
@@ -11,6 +12,9 @@ let initWebRoutes = (app) => {
     /*Register, Login Authentication & Logout - Starts*/
     router.post("/register", loginController.createNewUser);
     router.post("/login", loginController.getPageLogin);
+
+    /* Create a new pickup */
+    router.post("/newpickup", profileController.newPickup);
 
     router.post("/logout", loginController.postLogOut);
 

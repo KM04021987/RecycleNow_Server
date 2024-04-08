@@ -18,7 +18,7 @@ let createNewUser = (data) => {
             //create a new account
             ibmdb.open(connStr, function (err, conn) {
                 if (err) throw err;
-                conn.query("INSERT INTO " + process.env.DB_SCHEMA + ".user_detail (fullname, phone_no, password) values(?, ?, ?);", [data.fullname, data.phone, pass], function (err, rows) {
+                conn.query("INSERT INTO " + process.env.DB_SCHEMA + ".user_detail (fullname, phone_no, password, user_type) values(?, ?, ?, ?);", [data.fullname, data.phone, pass, data.usertype], function (err, rows) {
                     if (err) {
                         reject(false)
                         console.log(err)

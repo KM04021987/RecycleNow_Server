@@ -16,7 +16,7 @@ let getPageLogin = async (req, res, next) => {
                     let match = await loginService.comparePassword(userinfo.password, user);
                     if (match === true) {
                         const token = jwt.sign({ account: user.ACCOUNT, usertype: user.USER_TYPE }, 'abcdefghijk');
-                        const decode = jwt.verify(token, 'abcdefghijk');
+                        //const decode = jwt.verify(token, 'abcdefghijk');
                         const data = {
                             user: user,
                             token: token,
@@ -52,9 +52,15 @@ let createNewUser = async (req, res) => {
     try {
         await loginService.createNewUser(newUser);
         const token = jwt.sign({ phone: 'req.body.phone' }, 'abcdefghijk');
+        /* STARTS - This block of code is done to avoid error when user registers for the 1st time */
+        let user = {
+            FULLNAME : newUser.fullname
+        }
+        /* ENDS */
         const data = {
+            user: user,
             token: token,
-            usertype: " "
+            usertype: req.body.usertype
         }
         return res.send(data)
     } catch (err) {
