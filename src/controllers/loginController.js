@@ -54,7 +54,7 @@ let createNewUser = async (req, res) => {
         const token = jwt.sign({ phone: 'req.body.phone' }, 'abcdefghijk');
         /* STARTS - This block of code is done to avoid error when user registers for the 1st time */
         let user = {
-            FULLNAME : newUser.fullname
+            FULLNAME: newUser.fullname
         }
         /* ENDS */
         const data = {

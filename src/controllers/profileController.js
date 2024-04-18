@@ -4,11 +4,11 @@ let newPickup = async (req, res) => {
     console.log('profileController: newPickup')
     let pickupinfo = {
         account: req.body.account,
-        plasticbottles: req.body.plasticbottles, 
-        plasticwrapper: req.body.plasticwrapper, 
-        glassbottles: req.body.glassbottles, 
-        metalcans: req.body.metalcans, 
-        paperbox: req.body.paperbox, 
+        plasticbottles: req.body.plasticbottles,
+        plasticwrapper: req.body.plasticwrapper,
+        glassbottles: req.body.glassbottles,
+        metalcans: req.body.metalcans,
+        paperbox: req.body.paperbox,
         otherthermocolplasticwaste: req.body.otherthermocolplasticwaste,
         country: req.body.country,
         state: req.body.state,
