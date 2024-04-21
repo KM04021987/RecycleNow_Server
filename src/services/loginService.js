@@ -7,26 +7,20 @@ let connStr = "DATABASE=" + process.env.DB_DATABASE + ";HOSTNAME=" + process.env
 let createNewUser = (data) => {
     console.log('loginService: createNewUser')
     return new Promise(async (resolve, reject) => {
-        // check phone number exists or not
-        let isPhoneExist = await checkExistPhone(data.phone);
-        if (isPhoneExist) {
-            reject(`This phone "${data.phone}" already exists in our database. Please choose another phone number.`);
-        } else {
-            // hash password
-            let salt = bcrypt.genSaltSync(10);
-            let pass = bcrypt.hashSync(data.password, salt);
-            //create a new account
-            ibmdb.open(connStr, function (err, conn) {
-                if (err) throw err;
-                conn.query("INSERT INTO " + process.env.DB_SCHEMA + ".user_detail (fullname, phone_no, password, user_type) values(?, ?, ?, ?);", [data.fullname, data.phone, pass, data.usertype], function (err, rows) {
-                    if (err) {
-                        reject(false)
-                        console.log(err)
-                    }
-                    resolve("A new user is successfully created");
-                })
-            });
-        }
+    // hash password
+    let salt = bcrypt.genSaltSync(10);
+    let pass = bcrypt.hashSync(data.password, salt);
+    //create a new account
+    ibmdb.open(connStr, function (err, conn) {
+        if (err) throw err;
+        conn.query("INSERT INTO " + process.env.DB_SCHEMA + ".user_detail (fullname, phone_no, password, user_type) values(?, ?, ?, ?);", [data.fullname, data.phone, pass, data.usertype], function (err, rows) {
+            if (err) {
+                reject(err)
+                console.log(err)
+            }
+            resolve("A new user is successfully created");
+        })
+    });
     })
 };
 
@@ -117,6 +111,7 @@ let findUserByAccount = (account) => {
 
 module.exports = {
     createNewUser: createNewUser,
+    checkExistPhone: checkExistPhone,
     findUserByPhone: findUserByPhone,
     comparePassword: comparePassword,
     findUserByAccount: findUserByAccount

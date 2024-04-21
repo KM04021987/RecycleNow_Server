@@ -48,27 +48,19 @@ let createNewUser = async (req, res) => {
         usertype: req.body.usertype
 
     };
-
-    try {
-        await loginService.createNewUser(newUser);
-        const token = jwt.sign({ phone: 'req.body.phone' }, 'abcdefghijk');
-        /* STARTS - This block of code is done to avoid error when user registers for the 1st time */
-        let user = {
-            FULLNAME: newUser.fullname
+        
+    let isPhoneExist = await loginService.checkExistPhone(newUser.phone);
+    if (isPhoneExist) {
+        res.status(401).send({ "e": "This phone already exists. Please use other phone number." })
+    }
+    else {
+        try {
+            await loginService.createNewUser(newUser);
+            return res.status(200).send({ "msg": "Successfully Registered!" })
+        } catch (err) {
+            console.log(err)
+            res.status(402).send({ "e": "Error Occured duing registration!" })
         }
-        /* ENDS */
-        const data = {
-            user: user,
-            token: token,
-            usertype: req.body.usertype
-        }
-        return res.send(data)
-    } catch (err) {
-        req.flash("errors", err);
-        console.log('err:', +err)
-        return res.json({
-            "message": err
-        });
     }
 };
 
