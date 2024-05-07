@@ -19,6 +19,29 @@ let newPickupService = (pickupinfo) => {
     })
 };
 
+let fetchPickupRequests = (account) => {
+    console.log('profileService: fetchPickupRequests')
+    return new Promise((resolve, reject) => {
+        try {
+            ibmdb.open(connStr, function (err, conn) {
+                if (err) throw err;
+                //let count = process.env.FETCH_ROW_COUNT;
+                conn.query("SELECT * FROM " + process.env.DB_SCHEMA + ".pickup_request WHERE donor_account=? ORDER BY LAST_UPDATED_TS DESC fetch first 2 rows only with ur;", [account], function (err, rows) {
+                    if (err) {
+                        console.log(err)
+                        reject(err)
+                    }
+                    let data = rows;
+                    resolve(data);
+                })
+            });
+        } catch (err) {
+            reject(err);
+        }
+    });
+};
+
 module.exports = {
-    newPickupService: newPickupService
+    newPickupService: newPickupService,
+    fetchPickupRequests: fetchPickupRequests
 };
