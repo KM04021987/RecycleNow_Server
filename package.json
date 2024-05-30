@@ -1,7 +1,7 @@
 {
-  "name": "recyclenowserver",
+  "name": "RecycleNow_Server",
   "version": "1.0.0",
-  "description": "For recyclenowserver project",
+  "description": "For RecycleNow_Server project",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

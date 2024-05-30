@@ -28,4 +28,4 @@ app.use(bodyParser.urlencoded({ extended: true }));
 initWebRoutes(app);
 
 let port = process.env.PORT;
-app.listen(port, () => console.log(`recyclenowserver is running on port ${port}!`));
+app.listen(port, () => console.log(`RecycleNow_Server is running on port ${port}!`));
