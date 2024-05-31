@@ -49,6 +49,7 @@ let checkExistPhone = (phone) => {
 
 let findUserByPhone = (phone) => {
     console.log('loginService: findUserByPhone')
+    console.log(phone)
     return new Promise((resolve, reject) => {
         try {
             ibmdb.open(connStr, function (err, conn) {
