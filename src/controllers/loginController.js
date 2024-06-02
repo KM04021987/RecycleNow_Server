@@ -71,7 +71,6 @@ let createNewUser = async (req, res) => {
 
 let postLogOut = (req, res) => {
     console.log('loginController: postLogOut')
-    console.log(req.headers.authorization)
     req.session.destroy(function (err) {
         return res.redirect("/");
     });

@@ -20,14 +20,26 @@ let newPickup = async (req, res) => {
 
     try {
         await profileService.newPickupService(pickupinfo);
-        const success = "A new pickup request is successfully entered";
-        const data = {
-            message: success
+        try {
+            profileService.fetchPickupRequests(pickupinfo.account).then((pickupdata) => {
+                const data = {
+                    user: req.body.saveduser,
+                    token: req.body.savedtoken,
+                    usertype: req.body.savedusertype,
+                    pickupdata: pickupdata
+                }
+                return res.send(data)
+            })
+        } catch (err) {
+            req.flash("errors", err);
+            console.log(err)
+            return res.json({
+                "message": err
+            });
         }
-        return res.send(data)
     } catch (err) {
         req.flash("errors", err);
-        console.log('err:', +err)
+        console.log(err)
         return res.json({
             "message": err
         });
