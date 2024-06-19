@@ -19,6 +19,23 @@ let newPickupService = (pickupinfo) => {
     })
 };
 
+let updatePickupService = (pickupinfo) => {
+    console.log('profileService: updatePickupService')
+    return new Promise(async (resolve, reject) => {
+        ibmdb.open(connStr, function (err, conn) {
+            if (err) throw err;
+            conn.query("UPDATE "+process.env.DB_SCHEMA+".PICKUP_REQUEST SET PLASTIC_BOTTLE = ?, PLASTIC_WRAPPER= ?, GLASS_BOTTLE= ?, METAL_CANS= ?, PAPER_WASTE= ?, OTHER_WASTE= ?, DONOR_COUNTRY= ?, DONOR_STATE= ?, DONOR_CITY= ?, DONOR_PIN_OR_ZIP= ?, DONOR_ADDRESS= ?, DONOR_PHONE_NO= ? where PICKUP_REQUEST_NO = ?;", [pickupinfo.plasticbottles, pickupinfo.plasticwrapper, pickupinfo.glassbottles, pickupinfo.metalcans, pickupinfo.paperbox, pickupinfo.otherthermocolplasticwaste, pickupinfo.country, pickupinfo.state, pickupinfo.city, pickupinfo.ziporpin, pickupinfo.address, pickupinfo.phone, pickupinfo.pickuprequestno], function(err, rows) {
+                if (err) {
+                    reject(false)
+                    console.log(err)
+                }
+                resolve("Successfully updated pickup request");
+            })
+        });
+    })
+};
+
+
 let fetchPickupRequests = (account) => {
     console.log('profileService: fetchPickupRequests')
     return new Promise((resolve, reject) => {
@@ -43,5 +60,6 @@ let fetchPickupRequests = (account) => {
 
 module.exports = {
     newPickupService: newPickupService,
+    updatePickupService: updatePickupService,
     fetchPickupRequests: fetchPickupRequests
 };

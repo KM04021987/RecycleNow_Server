@@ -15,6 +15,7 @@ let initWebRoutes = (app) => {
 
     /* Create a new pickup */
     router.post("/newpickup", profileController.newPickup);
+    router.post("/updatepickup", profileController.updatePickup);
 
     router.post("/logout", loginController.postLogOut);
 
